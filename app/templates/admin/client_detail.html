@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIOZON | Histórico do Cliente</title>
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <style>
+        .admin-container { max-width: 1240px; margin: 0 auto; padding: 20px; font-family: system-ui, -apple-system, sans-serif; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+        .client-card { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .btn { padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; cursor: pointer; border: none; display: inline-block; }
+        .btn-primary { background: #0284c7; color: white; }
+        .btn-outline { background: transparent; border: 1px solid #cbd5e0; color: #4a5568; }
+        .table-responsive { overflow-x: auto; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .os-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        .os-table th, .os-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+        .os-table th { background-color: #f8fafc; color: #475569; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div>
+                <h1 style="margin: 0; color: #0f172a; font-size: 24px;">BIOZON - CRM 360º do Cliente</h1>
+                <small style="color: #64748b;">Usuário conectado: <strong>{{ current_user }}</strong></small>
+            </div>
+            <a href="/admin/os" class="btn btn-outline">Voltar às OS</a>
+        </header>
+
+        <div class="client-card">
+            <h2 style="margin-top: 0; color: #0284c7;">👤 {{ client.name }}</h2>
+            <p style="margin: 4px 0;"><strong>Telefone/WhatsApp:</strong> {{ client.phone }}</p>
+            <p style="margin: 4px 0;"><strong>Bairro:</strong> {{ client.neighborhood }}</p>
+            <p style="margin: 4px 0;"><strong>Endereço:</strong> {{ client.address }}</p>
+            <p style="margin: 4px 0;"><strong>Total de Atendimentos:</strong> {{ client.total_services }} OS(s)</p>
+        </div>
+
+        <h3>📋 Histórico de Atendimentos</h3>
+        <div class="table-responsive">
+            <table class="os-table">
+                <thead>
+                    <tr>
+                        <th>Nº OS</th>
+                        <th>Data</th>
+                        <th>Equipamento</th>
+                        <th>Serviço</th>
+                        <th>Status</th>
+                        <th>Valor Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td><strong>#{{ "%04d"|format(order.id) }}</strong></td>
+                        <td>{{ order.created_at.strftime('%d/%m/%Y') if order.created_at else 'N/I' }}</td>
+                        <td>{{ order.equipment }}</td>
+                        <td>{{ order.service_type or 'Serviço Geral' }}</td>
+                        <td><strong>{{ order.status }}</strong></td>
+                        <td>R$ {{ "%.2f"|format(order.total_value or 0.0) }}</td>
+                        <td>
+                            <a href="/admin/os/{{ order.id }}/pdf" target="_blank" class="btn btn-primary" style="padding: 4px 8px; font-size: 12px;">📄 PDF</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

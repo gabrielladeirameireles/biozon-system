@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIOZON | Purificadores de Água & Assistência Técnica Autorizada</title>
+    
+    <!-- Favicon Gota BIOZON -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284c7'><path d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'/></svg>">
+    
+    <link rel="stylesheet" href="/static/css/base.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --dark-blue: #0f172a;
+            --biozon-bg: #f0f9ff;
+            --biozon-bg-soft: #e0f2fe;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border-color: #bae6fd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            background-color: var(--biozon-bg);
+            line-height: 1.6;
+        }
+
+        /* HEADER FIXO */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo-badge {
+            font-size: 10px;
+            background: var(--biozon-bg-soft);
+            color: var(--primary-dark);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-blue);
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-admin-link {
+            color: var(--primary) !important;
+            font-weight: 800 !important;
+            background: var(--biozon-bg-soft);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-wa-header {
+            background: #25d366;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* VÍDEO 1 - HERO SECTION (WATER.MP4) */
+        .hero-video-container {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #031427;
+            margin-top: 65px;
+        }
+
+        .hero-video-element {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(2, 132, 199, 0.55) 100%);
+            z-index: 1;
+        }
+
+        .hero-video-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            padding: 40px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-title-main {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        .hero-title-main span {
+            color: #38bdf8;
+        }
+
+        .hero-subtitle-main {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            backdrop-filter: blur(8px);
+        }
+
+        /* CONCEITO E IMPACTO */
+        .impact-section {
+            padding: 80px 20px;
+            background: var(--biozon-bg);
+            text-align: center;
+        }
+
+        .impact-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark-blue);
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .impact-title span {
+            color: var(--primary);
+        }
+
+        .impact-description {
+            font-size: 17px;
+            color: #475569;
+            max-width: 750px;
+            margin: 0 auto 48px;
+        }
+
+        .water-importance-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            text-align: left;
+        }
+
+        .importance-card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.05);
+        }
+
+        .importance-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--biozon-bg-soft);
+            color: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        /* CATÁLOGO COM FOTOS DE PRODUTOS */
+        .section-products {
+            padding: 80px 20px;
+            background: var(--biozon-bg-soft);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: var(--dark-blue);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+
+        .product-img-wrapper {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            background: var(--biozon-bg);
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #e0f2fe;
+            position: relative;
+        }
+
+        .product-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .product-category {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .product-title {
+            font-size: 22px;
+            color: var(--dark-blue);
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .product-specs {
+            background: var(--biozon-bg);
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #475569;
+            margin: 16px 0 24px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        /* WIZARD INTERATIVO */
+        .wizard-section {
+            background: var(--biozon-bg);
+            padding: 80px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .wizard-card {
+            max-width: 750px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 36px;
+            box-shadow: 0 10px 15px -3px rgba(2, 132, 199, 0.1);
+        }
+
+        /* SEÇÃO GETÚLIO LADEIRA */
+        .getulio-section {
+            padding: 80px 20px;
+            background: var(--biozon-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .getulio-flex-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .getulio-photo-card {
+            position: relative;
+            max-width: 340px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px -6px rgba(0,0,0,0.15);
+            background: #0f172a;
+        }
+
+        .getulio-photo-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .getulio-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.90);
+            backdrop-filter: blur(6px);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .getulio-content-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .getulio-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--dark-blue);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .getulio-description {
+            font-size: 16px;
+            color: #334155;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .getulio-stats-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .getulio-stat-box {
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .getulio-stat-num {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .getulio-stat-text {
+            font-size: 13px;
+            color: #475569;
+            font-weight: 700;
+        }
+
+        /* FAQ */
+        .faq-section {
+            background: var(--biozon-bg-soft);
+            padding: 80px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .faq-question {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+        }
+
+        /* VÍDEO 2 - SEÇÃO DE CONTATO (CACHOEIRA.MP4) */
+        .contact-section {
+            position: relative;
+            padding: 100px 20px;
+            overflow: hidden;
+            color: white;
+        }
+
+        .contact-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .contact-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.90) 0%, rgba(2, 132, 199, 0.82) 100%);
+            z-index: 2;
+        }
+
+        .contact-container {
+            position: relative;
+            z-index: 3;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+
+        .contact-detail {
+            margin-bottom: 16px;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 14px 18px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .contact-detail strong {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            margin-bottom: 2px;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            color: var(--dark-blue);
+            padding: 36px;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-card h3 {
+            margin-top: 0;
+            font-size: 22px;
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            background-color: var(--biozon-bg);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #25d366;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--dark-blue);
+            color: #94a3b8;
+            padding: 48px 20px 24px;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 36px;
+            padding-bottom: 36px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #25d366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .header { padding: 12px 20px; }
+            .nav-links { display: none; }
+            .contact-container { grid-template-columns: 1fr; gap: 32px; }
+            .getulio-flex-container { grid-template-columns: 1fr; text-align: center; justify-content: center; }
+            .getulio-photo-card { margin: 0 auto; }
+            .getulio-stats-row { justify-content: center; }
+            .hero-title-main { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER PRINCIPAL -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                <i data-lucide="droplet" style="color: #0284c7;"></i> BIOZON
+            </a>
+            <span class="logo-badge">HIDROFILTROS</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#o-que-e-agua">A Água</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="#wizard">Descobrir Filtro</a></li>
+                <li><a href="#getulio">Getúlio Ladeira</a></li>
+                <li><a href="#faq">Dúvidas</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <!-- LINK PARA A ÁREA DO ADMINISTRADOR -->
+                <li><a href="/admin/login" class="nav-admin-link">Área do Colaborador</a></li>
+            </ul>
+        </nav>
+        <a href="https://wa.me/5585987847784?text=Olá!%20Gostaria%20de%20falar%20com%20a%20BIOZON." target="_blank" class="btn-wa-header">
+            <i data-lucide="message-square"></i> WhatsApp
+        </a>
+    </header>
+
+    <main>
+        <!-- 1. HERO COM VÍDEO 1 EM LOOP LOCAL (WATER.MP4) -->
+        <section class="hero-video-container">
+            <video id="hero-video" class="hero-video-element" autoplay loop muted playsinline preload="auto">
+                <source src="/static/video/water.mp4" type="video/mp4">
+            </video>
+            <div class="hero-video-overlay"></div>
+
+            <div class="hero-video-content">
+                <div class="hero-pill">
+                    <i data-lucide="droplet" style="width: 16px; height: 16px; color: #38bdf8;"></i>
+                    Distribuição Autorizada Hidrofiltros em Fortaleza
+                </div>
+                <h1 class="hero-title-main">
+                    A experiência definitiva em <span>água pura</span> e ultrafiltrada.
+                </h1>
+                <p class="hero-subtitle-main">
+                    Tecnologia avançada para residências e empresas sob coordenação do especialista Getúlio Ladeira.
+                </p>
+                <div class="btn-group">
+                    <a href="https://wa.me/5585987847784?text=Olá!%20Gostaria%20de%20falar%20com%20o%20técnico%20Getúlio." target="_blank" class="btn-primary" style="background: #25d366;">
+                        <i data-lucide="message-square"></i> WhatsApp (85) 9 8784-7784
+                    </a>
+                    <a href="#o-que-e-agua" class="btn-secondary">Descobrir Mais</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. CONCEITO E SAÚDE -->
+        <section id="o-que-e-agua" class="impact-section">
+            <h2 class="impact-title">
+                Água não é apenas líquido. <span>É a essência da sua saúde.</span>
+            </h2>
+            <p class="impact-description">
+                Diariamente, a água percorre quilômetros em redes antigas até a sua torneira. A filtragem por ultrafiltração (UF) elimina até 99,9% de vírus, bactérias e o excesso de cloro, entregando hidratação pura em sua forma mais natural.
+            </p>
+
+            <div class="water-importance-grid">
+                <div class="importance-card">
+                    <div class="importance-icon">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Proteção Bacteriológica</h3>
+                    <p style="color: #475569; font-size: 0.95rem;">
+                        Eliminação de 99,9% de impurezas invisíveis, prevenindo contaminações no consumo diário da sua família.
+                    </p>
+                </div>
+
+                <div class="importance-card">
+                    <div class="importance-icon">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Zero Gosto de Cloro</h3>
+                    <p style="color: #475569; font-size: 0.95rem;">
+                        Sabor leve e cristalino para beber, preparar cafés, sucos e refeições com total pureza.
+                    </p>
+                </div>
+
+                <div class="importance-card">
+                    <div class="importance-icon">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Equilíbrio & Mineralização</h3>
+                    <p style="color: #475569; font-size: 0.95rem;">
+                        Sistemas que mantêm minerais essenciais como cálcio e magnésio, auxiliando na saúde corporal.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+       <!-- 3. CATÁLOGO COM FOTOS DE PRODUTOS -->
+<section id="produtos" class="section-products">
+    <div class="products-container">
+        <div class="section-header">
+            <h2 class="section-title">Catálogo Hidrofiltros</h2>
+            <p style="color: #64748b;">Linha completa comercializada e instalada pela BIOZON em Fortaleza.</p>
+        </div>
+
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div>
+                    <div class="product-img-wrapper">
+                        <img src="{{ product.image }}" alt="{{ product.name }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
+                    <div class="product-category">{{ product.category }}</div>
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <p style="font-size: 14px; color: #334155; text-align: left;">{{ product.description }}</p>
+                    <div class="product-specs">
+                        <p><strong>Retenção:</strong> {{ product.retention_class }}</p>
+                        <p><strong>Eficiência:</strong> {{ product.bacteriological_efficiency }}</p>
+                        <p><strong>Vazão:</strong> {{ product.flow_rate }}</p>
+                        <p><strong>Vida Útil:</strong> {{ product.refill_lifespan }}</p>
+                    </div>
+                </div>
+                <a href="https://wa.me/5585987847784?text=Olá!%20Quero%20orçamento%20do%20produto%20{{ product.name }}" target="_blank" class="btn-primary" style="width: 100%; justify-content: center;">
+                    Consultar este Modelo
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+        <!-- 4. WIZARD INTERATIVO DE RECOMENDAÇÃO DE FILTRO -->
+        <section id="wizard" class="wizard-section">
+            <div class="wizard-card">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 26px; font-weight: 800; color: #0f172a;">Qual o Purificador Ideal?</h2>
+                    <p style="color: #475569; font-size: 14px;">Responda às opções abaixo para receber a indicação técnica:</p>
+                </div>
+
+                <form id="quiz-form">
+                    <div style="margin-bottom: 16px;">
+                        <label style="font-weight: 700; display: block; margin-bottom: 6px; color: #0f172a; font-size: 13px; text-transform: uppercase;">1. Local de Instalação</label>
+                        <select id="quiz-loc" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+                            <option value="pou_gelada">Cozinha / Escritório (Preciso de Água Gelada)</option>
+                            <option value="pou_bancada">Bancada da Cozinha (Água Natural)</option>
+                            <option value="pou_embora">Embaixo da Pia / Torneira Gourmet (Oculto)</option>
+                            <option value="poe_caixa">Caixa d'Água / Cavalete (Toda a Residência)</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="font-weight: 700; display: block; margin-bottom: 6px; color: #0f172a; font-size: 13px; text-transform: uppercase;">2. Necessidade Principal</label>
+                        <select id="quiz-prio" style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+                            <option value="bacterias">Eliminar 99,9% das Bactérias e Vírus (Máxima Segurança)</option>
+                            <option value="cloro">Remover Gosto de Cloro e Sujeira da Tubulação</option>
+                            <option value="alcalina">Água Alcalina com Adição de Minerais</option>
+                        </select>
+                    </div>
+
+                    <button type="button" onclick="runQuiz()" class="btn-primary" style="width: 100%; justify-content: center;">
+                        <i data-lucide="sparkles"></i> Ver Recomendação Técnica
+                    </button>
+                </form>
+
+                <div id="quiz-result" style="display: none; margin-top: 24px; padding: 20px; background: #e0f2fe; border-radius: 8px; border: 1px solid #0284c7;">
+                    <h4 id="quiz-title" style="font-size: 18px; font-weight: 800; color: #0369a1; margin-bottom: 6px;"></h4>
+                    <p id="quiz-desc" style="font-size: 14px; color: #0f172a; margin-bottom: 16px;"></p>
+                    <a id="quiz-wa" href="#" target="_blank" class="btn-primary" style="background: #25d366; text-decoration: none; display: inline-flex;">Falar com o Técnico no WhatsApp</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SEÇÃO GETÚLIO LADEIRA -->
+        <section id="getulio" class="getulio-section">
+            <div class="getulio-flex-container">
+                <!-- FOTO DO GETÚLIO -->
+                <div class="getulio-photo-card">
+                    <img src="/static/img/getulio.jpg" alt="Getúlio Ladeira - BIOZON" onerror="this.onerror=null; this.src='/static/img/getulio.png';">
+                    <div class="getulio-badge">
+                        <div style="font-weight: 800; font-size: 16px; color: #38bdf8;">30 Anos de Experiência</div>
+                        <div style="font-size: 12px; color: #cbd5e1;">Assistência Técnica Autorizada</div>
+                    </div>
+                </div>
+
+                <!-- CONTEÚDO GETÚLIO LADEIRA -->
+                <div class="getulio-content-right">
+                    <span style="background: var(--biozon-bg-soft); color: var(--primary-dark); font-size: 12px; font-weight: 800; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 12px; text-transform: uppercase;">
+                        Autoridade Técnica & Atendimento
+                    </span>
+                    
+                    <h2 class="getulio-title">
+                        Getúlio Ladeira: Serviço de purificação sem enrolação.
+                    </h2>
+
+                    <p class="getulio-description">
+                        Com três décadas de atuação no mercado de purificação de água em Fortaleza e mais de 1.000 clientes atendidos, Getúlio Ladeira coordena a BIOZON focado no diagnóstico técnico preciso e na indicação da solução definitiva para o seu imóvel.
+                    </p>
+
+                    <div class="getulio-stats-row">
+                        <div class="getulio-stat-box">
+                            <div class="getulio-stat-num">+1.000</div>
+                            <div class="getulio-stat-text">Clientes Atendidos</div>
+                        </div>
+                        <div class="getulio-stat-box">
+                            <div class="getulio-stat-num">100%</div>
+                            <div class="getulio-stat-text">Refis Originais Hidrofiltros</div>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/5585987847784?text=Olá%20Getúlio!%20Gostaria%20de%20agendar%20uma%20visita%20técnica." target="_blank" class="btn-primary" style="background: #25d366;">
+                        <i data-lucide="phone-call"></i> Falar Direto com Getúlio (85) 9 8784-7784
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. DÚVIDAS FREQUENTES (FAQ) -->
+        <section id="faq" class="faq-section">
+            <div class="faq-container">
+                <div class="section-header">
+                    <h2 class="section-title">Dúvidas Frequentes</h2>
+                    <p style="color: #64748b;">Orientações sobre substituição do elemento filtrante e atendimento em Fortaleza.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Qual é o intervalo recomendado para a troca do refil?</div>
+                    <div style="color: #475569; font-size: 15px;">A troca do elemento filtrante deve ser realizada a cada 6 meses (180 dias) para garantir a eficiência bacteriológica e a eliminação do cloro.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Como funciona a visita da assistência técnica?</div>
+                    <div style="color: #475569; font-size: 15px;">Realizamos o agendamento prévio com data e horário marcados. O técnico realiza os testes no local com emissão do comprovante de garantia.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Atendem em todos os bairros de Fortaleza?</div>
+                    <div style="color: #475569; font-size: 15px;">Sim, atendemos Fortaleza (Aldeota, Meireles, Cocó, Papicu, Centro, Messejana, etc.) e toda a região metropolitana.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. VÍDEO 2 - SEÇÃO DE CONTATO (CACHOEIRA.MP4 EM LOOP) -->
+        <section id="contato" class="contact-section">
+            <video class="contact-video" autoplay loop muted playsinline preload="auto">
+                <source src="/static/video/cachoeira.mp4" type="video/mp4">
+            </video>
+            <div class="contact-overlay"></div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Solicite sua Avaliação Técnica</h2>
+                    <p>Preencha o formulário ao lado para agendar uma visita ou tire suas dúvidas diretamente pelos nossos canais oficiais de atendimento.</p>
+                    
+                    <div class="contact-detail">
+                        <strong>Telefone / WhatsApp</strong>
+                        (85) 9 8784-7784
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <strong>E-mail Institucional</strong>
+                        contato@biozonpurificadores.com.br
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <strong>Localização e Cobertura</strong>
+                        Atendimento em Fortaleza / CE e Região Metropolitana
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Solicite sua avaliação técnica</h3>
+                    <p>Preencha os dados e receba o retorno pelo WhatsApp em até 1 dia útil.</p>
+                    
+                    <form action="https://wa.me/5585987847784" method="GET" target="_blank">
+                        <div class="form-group">
+                            <label>Nome Completo</label>
+                            <input type="text" name="text_nome" required placeholder="Seu nome">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Telefone / WhatsApp</label>
+                            <input type="text" name="text_tel" required placeholder="(85) 98765-4321">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Bairro em Fortaleza</label>
+                            <input type="text" name="text_bairro" placeholder="Ex: Aldeota">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Serviço Desejado</label>
+                            <select name="text_servico">
+                                <option value="Troca de Refil">Troca de Refil / Filtro (180 Dias)</option>
+                                <option value="Comprar Purificador">Compra de Purificador Novo</option>
+                                <option value="Manutenção Técnica">Conserto ou Manutenção Técnica</option>
+                                <option value="Instalação">Instalação de Equipamento</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Solicitar avaliação técnica</button>
+                        
+                        <div style="text-align: center; margin-top: 14px; font-size: 11px; color: #64748b;">
+                            Ao enviar, você concorda com a nossa <a href="/politica-de-privacidade" target="_blank" style="color: #0284c7; font-weight: 700;">Política de Privacidade</a>.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BOTÃO FLUTUANTE WHATSAPP -->
+    <a href="https://wa.me/5585987847784?text=Olá!%20Preciso%20de%20atendimento%20da%20BIOZON." target="_blank" class="whatsapp-float">
+        <i data-lucide="message-square"></i> WhatsApp (85) 9 8784-7784
+    </a>
+
+    <!-- RODAPÉ INSTITUCIONAL -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>BIOZON Purificadores</h4>
+                <p style="font-size: 13px; line-height: 1.6; color: #94a3b8;">Assistência Técnica Autorizada Hidrofiltros. Soluções completas em filtragem de água residencial e comercial em Fortaleza/CE.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Serviços Técnicos</h4>
+                <ul>
+                    <li>Troca de Refil Preventiva (180 Dias)</li>
+                    <li>Instalação de Purificadores</li>
+                    <li>Filtros Centrais de Entrada</li>
+                    <li>Higienização e Manutenção</li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="#produtos">Produtos e Filtros</a></li>
+                    <li><a href="#getulio">Getúlio Ladeira</a></li>
+                    <li><a href="#faq">Dúvidas Frequentes</a></li>
+                    <li><a href="#contato">Solicitar Contato</a></li>
+                    <li><a href="/admin/login">Área do Colaborador</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 BIOZON Purificadores. Todos os direitos reservados.</div>
+            <div>
+                <a href="/politica-de-privacidade" target="_blank">Política de Privacidade</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroVid = document.getElementById('hero-video');
+            if (heroVid) {
+                heroVid.muted = true;
+                heroVid.play().catch(function(err) {
+                    console.log("Autoplay aguardando interação:", err);
+                });
+            }
+        });
+
+        function runQuiz() {
+            const loc = document.getElementById('quiz-loc').value;
+            const res = document.getElementById('quiz-result');
+            const title = document.getElementById('quiz-title');
+            const desc = document.getElementById('quiz-desc');
+            const wa = document.getElementById('quiz-wa');
+
+            let recTitle = "";
+            let recDesc = "";
+
+            if (loc === 'pou_gelada') {
+                recTitle = "Modelo Recomendado: Purificador Ultramax";
+                recDesc = "Refrigeração por compressor com ultrafiltração por membrana UF. Retém vírus e bactérias com Classe A em filtragem.";
+            } else if (loc === 'pou_embora') {
+                recTitle = "Modelo Recomendado: MultiFacile (Under Sink)";
+                recDesc = "Instalação oculta sob a pia da cozinha para alimentar torneiras gourmet e cafeteiras.";
+            } else if (loc === 'poe_caixa') {
+                recTitle = "Modelo Recomendado: Filtro ECO 9.3/4\" ou Linha BIG";
+                recDesc = "Instalado no cavalete ou caixa d'água para proteger toda a encanação e equipamentos residenciais.";
+            } else {
+                recTitle = "Modelo Recomendado: Purificador Facile C7";
+                recDesc = "Purificador de bancada compacto. Elimina 99,9% das bactérias da água sem consumo de energia elétrica.";
+            }
+
+            title.innerText = recTitle;
+            desc.innerText = recDesc;
+            wa.href = "https://wa.me/5585987847784?text=" + encodeURIComponent("Olá Getúlio! Fiz o teste no site e o modelo recomendado foi: " + recTitle);
+            res.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

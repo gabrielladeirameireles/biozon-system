@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard & Gestão de OS | BIOZON</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #e2e8f0;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text); padding: 2rem 1rem; }
+    .container { max-width: 1250px; margin: 0 auto; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+    h1 { font-size: 1.8rem; font-weight: 900; color: #07132b; }
+    
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .metric-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    
+    .metric-value { font-size: 1.6rem; font-weight: 900; color: #0f172a; line-height: 1.1; }
+    .metric-label { font-size: 0.82rem; font-weight: 700; color: #64748b; }
+
+    .grid-layout { display: grid; grid-template-columns: 370px 1fr; gap: 2rem; }
+    
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 2rem; }
+    .card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; color: #0284c7; display: flex; align-items: center; gap: 0.5rem; }
+    
+    .form-group { margin-bottom: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    label { font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.35rem; color: #334155; }
+    input, select, textarea { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
+    
+    .btn { background: var(--primary); color: #fff; border: none; padding: 0.85rem 1.25rem; font-weight: 800; border-radius: 8px; cursor: pointer; width: 100%; font-size: 0.95rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; }
+    .btn:hover { background: var(--primary-dark); }
+    
+    .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .filter-bar input, .filter-bar select { width: auto; min-width: 180px; }
+    
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #f1f5f9; font-weight: 800; color: #475569; }
+    
+    .badge { padding: 0.3rem 0.75rem; border-radius: 9999px; font-weight: 800; font-size: 0.75rem; display: inline-block; }
+    .badge-pendente { background: #fef3c7; color: #b45309; }
+    .badge-andamento { background: #e0f2fe; color: #0369a1; }
+    .badge-concluido { background: #dcfce7; color: #15803d; }
+    
+    .badge-notified { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-unnotified { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .btn-wa { background: #25d366; color: #fff; padding: 0.45rem 0.85rem; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; border: none; cursor: pointer; }
+    .btn-wa:hover { background: #1da851; }
+
+    .btn-pdf { background: #0284c7; color: #fff; padding: 0.45rem 0.85rem; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .btn-pdf:hover { background: #0369a1; }
+    
+    @media (max-width: 900px) {
+      .grid-layout { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>Dashboard & Atendimento BIOZON</h1>
+        <p style="color: #64748b; font-weight: 600;">Painel de Controle Recorrente e Manutenções em Fortaleza</p>
+      </div>
+      <a href="/" style="color: #0284c7; font-weight: 800; text-decoration: none;">&larr; Voltar ao Site Público</a>
+    </header>
+
+    <!-- DASHBOARD DE MÉTRICAS -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon" style="background: #e0f2fe; color: #0284c7;">
+          <i data-lucide="clipboard-list" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="metric-value">{{ metrics.total }}</div>
+          <div class="metric-label">Total de Atendimentos</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon" style="background: #fef3c7; color: #b45309;">
+          <i data-lucide="clock" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="metric-value">{{ metrics.pending }}</div>
+          <div class="metric-label">OS Pendentes</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon" style="background: #dcfce7; color: #15803d;">
+          <i data-lucide="check-circle-2" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="metric-value">{{ metrics.completed }}</div>
+          <div class="metric-label">Atendimentos Concluídos</div>
+        </div>
+      </div>
+
+      <div class="metric-card" style="border: 2px solid #ef4444;">
+        <div class="metric-icon" style="background: #fee2e2; color: #dc2626;">
+          <i data-lucide="bell-ring" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="metric-value" style="color: #dc2626;">{{ metrics.due_soon_count }}</div>
+          <div class="metric-label">Refis a Vencer (30 Dias)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAINEL DE REFIS A VENCER -->
+    {% if due_soon_orders %}
+    <section class="card" style="border: 2px solid #0284c7; background: #f0f9ff;">
+      <h2 style="color: #0369a1;">
+        <i data-lucide="alert-circle" style="color: #0284c7;"></i>
+        Refis a Vencer / Vencidos nos Próximos 30 Dias
+      </h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente / Bairro</th>
+            <th>Equipamento</th>
+            <th>Data da Troca</th>
+            <th>Status Lembrete</th>
+            <th>Ações Rápidas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in due_soon_orders %}
+          <tr>
+            <td>
+              <strong>{{ order.client_name }}</strong><br>
+              <small style="color: #64748b;">{{ order.neighborhood }} | {{ order.client_phone }}</small>
+            </td>
+            <td><strong>{{ order.equipment }}</strong></td>
+            <td>
+              <strong style="color: {% if order.is_overdue %}#dc2626{% else %}#0369a1{% endif %};">
+                {{ order.next_maintenance_date }}
+                {% if order.is_overdue %}<span style="font-size: 0.7rem; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; margin-left: 4px;">VENCIDO</span>{% endif %}
+              </strong>
+            </td>
+            <td>
+              {% if order.notified %}
+                <span class="badge badge-notified">
+                  <i data-lucide="check" style="width: 12px; height: 12px; display: inline;"></i> Enviado em {{ order.last_notified_at }}
+                </span>
+              {% else %}
+                <span class="badge badge-unnotified">Pendente</span>
+              {% endif %}
+            </td>
+            <td>
+              <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                <a href="/admin/os/{{ order.id }}/send-whatsapp" target="_blank" class="btn-wa">
+                  <i data-lucide="message-square" style="width: 14px; height: 14px;"></i> WhatsApp
+                </a>
+                <a href="/admin/os/{{ order.id }}/pdf" target="_blank" class="btn-pdf">
+                  <i data-lucide="file-text" style="width: 14px; height: 14px;"></i> PDF
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+    {% endif %}
+
+    <div class="grid-layout">
+      <!-- FORMULÁRIO DE NOVA OS -->
+      <aside class="card">
+        <h2><i data-lucide="plus-circle"></i> Cadastrar Nova OS</h2>
+        <form action="/admin/os/new" method="POST">
+          <div class="form-group">
+            <label>Nome do Cliente</label>
+            <input type="text" name="client_name" required placeholder="Ex: Gabriel Santos">
+          </div>
+          <div class="form-group">
+            <label>Telefone / WhatsApp</label>
+            <input type="text" name="client_phone" required placeholder="Ex: 85988887777">
+          </div>
+          <div class="form-group">
+            <label>Bairro (Fortaleza)</label>
+            <input type="text" name="neighborhood" required placeholder="Ex: Aldeota">
+          </div>
+          <div class="form-group">
+            <label>Endereço Completo</label>
+            <input type="text" name="address" required placeholder="Rua, número, complemento">
+          </div>
+          <div class="form-group">
+            <label>Equipamento / Modelo</label>
+            <input type="text" name="equipment" required placeholder="Ex: Purificador Ultramax">
+          </div>
+          <div class="form-group">
+            <label>Tipo de Serviço</label>
+            <select name="service_type">
+              <option value="Troca de Refil / Vela">Troca de Refil / Vela</option>
+              <option value="Instalação">Instalação</option>
+              <option value="Manutenção Geral">Manutenção Geral</option>
+            </select>
+          </div>
+
+          <!-- DATAS: ATENDIMENTO E PRÓXIMA TROCA -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Data Atendimento</label>
+              <input type="date" name="scheduled_date">
+            </div>
+            <div class="form-group">
+              <label>Próxima Troca (+6m)</label>
+              <input type="date" name="next_maintenance_date">
+            </div>
+          </div>
+          <p style="font-size: 0.75rem; color: #64748b; margin-top: -0.5rem; margin-bottom: 1rem;">
+            * Se a "Próxima Troca" for deixada em branco, o sistema calcula +180 dias (6 meses) automaticamente.
+          </p>
+
+          <!-- CAMPOS FINANCEIROS -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Valor Refil (R$)</label>
+              <input type="number" step="0.01" name="value_parts" value="180.00" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>Mão de Obra (R$)</label>
+              <input type="number" step="0.01" name="value_labor" value="60.00" placeholder="0.00">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Forma de Pagamento</label>
+            <select name="payment_method">
+              <option value="Pix">Pix</option>
+              <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Boleto">Boleto</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Observações Técnicas</label>
+            <textarea name="notes" rows="2" placeholder="Ex: Vela trocada e pressão testada..."></textarea>
+          </div>
+          <button type="submit" class="btn">Cadastrar Ordem de Serviço</button>
+        </form>
+      </aside>
+
+      <!-- LISTA COMPLETA DE CHAMADOS -->
+      <main class="card">
+        <h2><i data-lucide="list"></i> Todas as Ordens de Serviço</h2>
+
+        <form method="GET" action="/admin/os" class="filter-bar">
+          <select name="status_filter" onchange="this.form.submit()">
+            <option value="">Todos os Status</option>
+            <option value="Pendente" {% if status_filter == 'Pendente' %}selected{% endif %}>Pendente</option>
+            <option value="Em Andamento" {% if status_filter == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
+            <option value="Concluído" {% if status_filter == 'Concluído' %}selected{% endif %}>Concluído</option>
+          </select>
+
+          <input type="text" name="neighborhood_filter" value="{{ neighborhood_filter }}" placeholder="Filtrar por Bairro..." onchange="this.form.submit()">
+        </form>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente / Bairro</th>
+              <th>Equipamento / Serviço</th>
+              <th>Data Serviço</th>
+              <th>Próxima Troca (+6m)</th>
+              <th>Status</th>
+              <th>Ações & Comprovante</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              <td>
+                <strong>{{ order.client_name }}</strong><br>
+                <small style="color: #64748b;">{{ order.neighborhood }} | {{ order.client_phone }}</small>
+              </td>
+              <td>
+                <strong>{{ order.equipment }}</strong><br>
+                <small style="color: #64748b;">{{ order.service_type }}</small>
+              </td>
+              <td>
+                <small style="color: #475569; font-weight: 700;">{{ order.scheduled_date or 'N/I' }}</small>
+              </td>
+              <td>
+                <strong style="color: #0369a1;">{{ order.next_maintenance_date or 'Não definida' }}</strong>
+              </td>
+              <td>
+                <span class="badge {% if order.status == 'Pendente' %}badge-pendente{% elif order.status == 'Em Andamento' %}badge-andamento{% else %}badge-concluido{% endif %}">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>
+                <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                  <a href="/admin/os/{{ order.id }}/pdf" target="_blank" class="btn-pdf">
+                    <i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Comprovante
+                  </a>
+
+                  <form action="/admin/os/{{ order.id }}/status" method="POST" style="display: inline;">
+                    <select name="new_status" onchange="this.form.submit()" style="padding: 0.35rem; font-size: 0.8rem; width: auto;">
+                      <option value="Pendente" {% if order.status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                      <option value="Em Andamento" {% if order.status == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
+                      <option value="Concluído" {% if order.status == 'Concluído' %}selected{% endif %}>Concluído</option>
+                    </select>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="6" style="text-align: center; color: #94a3b8; padding: 2rem;">
+                Nenhuma Ordem de Serviço cadastrada.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

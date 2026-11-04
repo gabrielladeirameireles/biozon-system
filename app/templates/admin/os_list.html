@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIOZON | Gestão de Ordens de Serviço</title>
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <style>
+        .admin-container { max-width: 1240px; margin: 0 auto; padding: 20px; font-family: system-ui, -apple-system, sans-serif; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+        .admin-nav { display: flex; gap: 12px; margin-bottom: 20px; }
+        .admin-nav a { text-decoration: none; color: #4a5568; font-weight: 600; padding: 8px 14px; border-radius: 6px; background: #edf2f7; }
+        .admin-nav a.active { background: #0284c7; color: white; }
+        
+        .card-form { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .card-title { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        .form-group label { font-size: 13px; font-weight: 600; color: #334155; }
+        .form-group input, .form-group select { padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+        
+        .filters-form { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0; align-items: center; }
+        
+        .btn { padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; cursor: pointer; border: none; display: inline-block; }
+        .btn-primary { background: #0284c7; color: white; }
+        .btn-success { background: #16a34a; color: white; }
+        .btn-outline { background: transparent; border: 1px solid #cbd5e0; color: #4a5568; }
+        .btn-pdf { background: #0284c7; color: white; border: none; }
+        .btn-logout { background: #dc2626; color: white; }
+        
+        .table-responsive { overflow-x: auto; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .os-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+        .os-table th, .os-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+        .os-table th { background-color: #f8fafc; color: #475569; font-weight: 700; }
+        .status-select { padding: 4px 8px; font-size: 12px; border-radius: 4px; border: 1px solid #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div>
+                <h1 style="margin: 0; color: #0f172a; font-size: 24px;">Painel de Controle BIOZON</h1>
+                <small style="color: #64748b;">Usuário conectado: <strong>{{ current_user }}</strong></small>
+            </div>
+            <a href="/admin/logout" class="btn btn-logout">Sair</a>
+        </header>
+
+        <nav class="admin-nav">
+            <a href="/admin/os" class="active">Ordens de Serviço (OS)</a>
+            <a href="/admin/maintenance/due">Trocas Preventivas (180 Dias)</a>
+            <a href="/" target="_blank">Ver Site Público</a>
+        </nav>
+
+        <!-- FORMULÁRIO DE NOVA OS -->
+        <div class="card-form">
+            <div class="card-title">➕ Cadastrar Nova Ordem de Serviço (OS)</div>
+            <form method="POST" action="/admin/os/new">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nome do Cliente *</label>
+                        <input type="text" name="client_name" required placeholder="Ex: João Silva">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone / WhatsApp *</label>
+                        <input type="text" name="client_phone" required placeholder="(85) 98765-4321">
+                    </div>
+                    <div class="form-group">
+                        <label>Bairro *</label>
+                        <input type="text" name="neighborhood" required placeholder="Ex: Aldeota">
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço Completo *</label>
+                        <input type="text" name="address" required placeholder="Rua, Número, Apto">
+                    </div>
+                    <div class="form-group">
+                        <label>Modelo do Equipamento *</label>
+                        <input type="text" name="equipment" required placeholder="Ex: Purificador Ultramax / Facile C7">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Serviço *</label>
+                        <select name="service_type" required>
+                            <option value="Troca de Refil / Filtro">Troca de Refil / Filtro</option>
+                            <option value="Instalação Nova">Instalação Nova</option>
+                            <option value="Manutenção / Conserto">Manutenção / Conserto</option>
+                            <option value="Higienização Técnica">Higienização Técnica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Valor Refil / Peças (R$)</label>
+                        <input type="text" name="value_parts" value="0,00" placeholder="0,00">
+                    </div>
+                    <div class="form-group">
+                        <label>Valor Mão de Obra (R$)</label>
+                        <input type="text" name="value_labor" value="0,00" placeholder="0,00">
+                    </div>
+                    <div class="form-group">
+                        <label>Forma de Pagamento</label>
+                        <select name="payment_method">
+                            <option value="Pix">Pix</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Cartão de Débito">Cartão de Débito</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Faturado / Boleto">Faturado / Boleto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nº Nota Fiscal (NF-e)</label>
+                        <input type="text" name="invoice_number" placeholder="Ex: NF-00452">
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label>Observações / Anotações Técnicas</label>
+                    <input type="text" name="notes" placeholder="Detalhes da instalação, observações do cliente, etc.">
+                </div>
+
+                <button type="submit" class="btn btn-success">Gerar Ordem de Serviço</button>
+            </form>
+        </div>
+
+        <!-- FILTROS -->
+        <form method="GET" action="/admin/os" class="filters-form">
+            <strong style="color: #334155; font-size: 14px;">Filtrar por:</strong>
+            <input type="text" name="neighborhood_filter" placeholder="Buscar por Bairro..." value="{{ neighborhood_filter }}" style="padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+            <select name="status_filter" style="padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                <option value="">Todos os Status</option>
+                <option value="Pendente" {% if status_filter == 'Pendente' %}selected{% endif %}>Pendente</option>
+                <option value="Em Andamento" {% if status_filter == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
+                <option value="Concluído" {% if status_filter == 'Concluído' %}selected{% endif %}>Concluído</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="/admin/os" class="btn btn-outline">Limpar</a>
+        </form>
+
+        <!-- TABELA -->
+        <div class="table-responsive">
+            <table class="os-table">
+                <thead>
+                    <tr>
+                        <th>Nº OS</th>
+                        <th>Cliente / Contato</th>
+                        <th>Bairro & Endereço</th>
+                        <th>Equipamento & Serviço</th>
+                        <th>Pagamento & NF</th>
+                        <th>Valor Total</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td><strong>#{{ "%04d"|format(order.id) }}</strong></td>
+                        <td>
+                            <strong>{{ order.client_name }}</strong><br>
+                            <small style="color: #64748b;">{{ order.client_phone }}</small>
+                        </td>
+                        <td>
+                            <strong>{{ order.neighborhood }}</strong><br>
+                            <small style="color: #64748b;">{{ order.address }}</small>
+                        </td>
+                        <td>
+                            <strong>{{ order.equipment }}</strong><br>
+                            <small style="color: #0284c7;">{{ order.service_type or 'Serviço Geral' }}</small>
+                        </td>
+                        <td>
+                            <span>{{ order.payment_method or 'Pix' }}</span><br>
+                            <small style="color: #64748b;">NF: {{ order.invoice_number or 'Pendente' }}</small>
+                        </td>
+                        <td><strong>R$ {{ "%.2f"|format(order.total_value or 0.0) }}</strong></td>
+                        <td>
+                            <form method="POST" action="/admin/os/{{ order.id }}/status" style="margin: 0;">
+                                <select name="new_status" onchange="this.form.submit()" class="status-select">
+                                    <option value="Pendente" {% if order.status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                                    <option value="Em Andamento" {% if order.status == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
+                                    <option value="Concluído" {% if order.status == 'Concluído' %}selected{% endif %}>Concluído</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 6px;">
+                                <a href="/admin/os/{{ order.id }}/pdf" target="_blank" class="btn btn-pdf" title="Gerar Comprovante / Nota PDF">📄 PDF</a>
+                                <a href="/admin/clients/{{ order.client_phone }}" class="btn btn-outline" title="Histórico do Cliente">Histórico</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" style="padding: 30px; text-align: center; color: #64748b;">
+                            Nenhuma Ordem de Serviço cadastrada até o momento.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIOZON Admin | Central de Aprovações</title>
+  <link rel="stylesheet" href="../../static/css/base.css">
+  <link rel="stylesheet" href="../../static/css/admin.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">BIOZON Painel</div>
+      <ul class="sidebar-menu">
+        <li><a href="dashboard.html">Visão Geral</a></li>
+        <li><a href="cms.html">Conteúdo do Site</a></li>
+        <li><a href="approvals.html" class="active">Aprovações de Alterações</a></li>
+        <li><a href="team.html">Equipe e Permissões</a></li>
+        <li><a href="refis.html">Controle de Refis</a></li>
+        <li><a href="settings.html">Configurações Gerais</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="header-panel">
+        <div>
+          <h2>Aprovações Pendentes</h2>
+          <p>Análise de rascunhos propostos pela equipe antes da publicação no site público.</p>
+        </div>
+      </div>
+
+      <!-- Item em Fila de Análise -->
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>Seção: Título Principal (Hero)</strong>
+            <p style="font-size:0.875rem; color:#718096; margin:0;">Proposto por: <em>Carlos Silva</em> em 28/10/2026 às 14:20</p>
+          </div>
+          <span class="badge badge-pending">Pendente</span>
+        </div>
+
+        <div class="diff-container">
+          <div class="diff-box old">
+            <strong style="color:#c53030;">Conteúdo Atual no Site:</strong>
+            <p style="margin-top:0.5rem; color:#1a202c;">Purificação de Água de Alta Performance</p>
+          </div>
+          <div class="diff-box new">
+            <strong style="color:#276749;">Alteração Proposta:</strong>
+            <p style="margin-top:0.5rem; color:#1a202c;">Sistemas de Purificação de Água Avançada para Fortaleza</p>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:1rem; justify-content:flex-end; margin-top:1rem;">
+          <button class="btn btn-outline" onclick="rejectRequest(1)">Rejeitar Alteração</button>
+          <button class="btn btn-primary" onclick="approveRequest(1)">Aprovar e Publicar</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../static/js/approvals.js"></script>
+</body>
+</html>
+
+

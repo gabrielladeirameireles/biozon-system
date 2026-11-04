@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>BIOZON Admin | Dashboard</title>
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-brand">
+          BIOZON
+          <span class="sidebar-brand-badge">PRO</span>
+        </div>
+        <ul class="sidebar-menu">
+          <li><a href="/admin/dashboard" class="active">Painel Geral</a></li>
+          <li><a href="/admin/team">Gestão de Equipe</a></li>
+          <li><a href="/admin/cms">Editor do Site</a></li>
+          <li><a href="/" target="_blank">Ver Site Público ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="user-profile-widget">
+        <div class="user-avatar">G</div>
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 700;">Getúlio</div>
+          <div style="font-size: 0.75rem; color: #94a3b8;">Coordenador Geral</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Painel de Gestão</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.95rem; margin-top: 0.25rem;">Visão geral da plataforma e controle de operações da BIOZON.</p>
+        </div>
+        <span class="badge badge-coordinator">Nível Coordenador</span>
+      </div>
+
+      <!-- Stat Grid -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Equipe Ativa</div>
+          <div class="stat-value">1 Colaborador</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Aprovações Pendentes</div>
+          <div class="stat-value">0 Rascunhos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Conformidade LGPD</div>
+          <div class="stat-value" style="color: #166534;">100% OK</div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3 class="admin-card-title">Ações do Sistema</h3>
+        <p style="color: var(--admin-text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Acesse as ferramentas administrativas exclusivas:</p>
+        <div style="display: flex; gap: 1rem;">
+          <a href="/admin/team" class="badge badge-coordinator" style="padding: 0.8rem 1.5rem; text-decoration: none; font-size: 0.85rem;">Gerenciar Membros & Convites</a>
+          <a href="/admin/cms" class="badge badge-active" style="padding: 0.8rem 1.5rem; text-decoration: none; font-size: 0.85rem;">Editar Textos do Portal</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
+

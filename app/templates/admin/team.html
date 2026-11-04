@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>BIOZON Admin | Equipe & Permissões</title>
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-brand">
+          BIOZON <span class="sidebar-brand-badge">SERRO UI</span>
+        </div>
+        <ul class="sidebar-menu">
+          <li><a href="/admin/dashboard"><i data-lucide="layout-dashboard" style="width: 18px; margin-right: 0.5rem;"></i> Painel Geral</a></li>
+          <li><a href="/admin/team" class="active"><i data-lucide="users" style="width: 18px; margin-right: 0.5rem;"></i> Gestão de Equipe</a></li>
+          <li><a href="/admin/cms"><i data-lucide="file-text" style="width: 18px; margin-right: 0.5rem;"></i> Editor CMS</a></li>
+          <li><a href="/" target="_blank"><i data-lucide="external-link" style="width: 18px; margin-right: 0.5rem;"></i> Ver Site Público</a></li>
+        </ul>
+      </div>
+      <div class="user-profile-widget">
+        <div class="user-avatar">G</div>
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 700;">Getúlio Ladeira</div>
+          <div style="font-size: 0.75rem; color: #94a3b8;">Coordenador Geral[cite: 1]</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Gestão de Colaboradores</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">Convide membros da equipe e atribua níveis de permissão[cite: 1, 2].</p>
+        </div>
+        <span class="badge badge-coordinator">Acesso de Coordenador[cite: 1, 2]</span>
+      </div>
+
+      <!-- Formulário de Convite com WhatsApp -->
+      <div class="admin-card">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem;">Enviar Convite de Acesso</h3>
+        <form id="invite-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) gap 1rem;">
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.25rem;">Nome Completo</label>
+            <input type="text" id="inv-name" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--admin-border); border-radius: 6px;">
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.25rem;">E-mail Corporativo</label>
+            <input type="email" id="inv-email" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--admin-border); border-radius: 6px;">
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.25rem;">Telefone / WhatsApp</label>
+            <input type="text" id="inv-phone" required placeholder="(85) 98784-7784" style="width: 100%; padding: 0.6rem; border: 1px solid var(--admin-border); border-radius: 6px;">
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="button" onclick="sendInvite()" style="background: var(--admin-accent); color: #fff; border: none; padding: 0.65rem 1.25rem; border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%;">
+              Gerar Link WhatsApp
+            </button>
+          </div>
+        </form>
+
+        <div id="invite-link-box" style="display: none; margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px;">
+          <p style="font-size: 0.9rem; color: #166534; font-weight: 700; margin-bottom: 0.5rem;">Convite gerado com sucesso!</p>
+          <a id="wa-btn-link" href="#" target="_blank" style="display: inline-block; background: #25d366; color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; font-weight: 700; font-size: 0.85rem;">
+            Abrir no WhatsApp Web/App ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Tabela da Equipe -->
+      <div class="admin-card">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">Membros Cadastrados</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Cargo</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for member in team_members %}
+            <tr>
+              <td><strong>{{ member.full_name }}</strong></td>
+              <td>{{ member.email }}</td>
+              <td><span class="badge badge-coordinator">{{ member.role.value }}</span></td>
+              <td><span class="badge badge-active">{{ member.status.value }}</span></td>
+            </tr>
+            {% else %}
+            <tr>
+              <td><strong>Getúlio Ladeira</strong></td>
+              <td>coordenador@biozon.com.br</td>
+              <td><span class="badge badge-coordinator">Coordenador</span></td>
+              <td><span class="badge badge-active">Ativo</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    async function sendInvite() {
+      const name = document.getElementById('inv-name').value;
+      const email = document.getElementById('inv-email').value;
+      const phone = document.getElementById('inv-phone').value;
+
+      if (!name || !phone) {
+        alert("Preencha o nome e o telefone do colaborador.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('full_name', name);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('send_via', 'whatsapp');
+
+      const response = await fetch('/admin/team/invite', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      if (data.status === 'success') {
+        document.getElementById('wa-btn-link').href = data.invite_url;
+        document.getElementById('invite-link-box').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
+
