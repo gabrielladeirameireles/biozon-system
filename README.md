@@ -23,8 +23,7 @@ Pensei em manter o repositório privado, mas o resultado final refletiu exatamen
 
 
 
-
-https://github.com/user-attachments/assets/4dc4fdd5-2ba7-4c1c-b004-f55940847c01
+https://youtu.be/XLt59Z4ITmE
 
 
 ---
